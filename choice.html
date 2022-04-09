@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <title>Havvanur Bozömeroğlu</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta content="computer, developer, game, software, science, blog, Technology, machine" name="description">
+        <meta content="computer, developer, game, software, science, blog, Technology, machine" name="keywords">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="index.css" type="text/css">
+        <link rel="icon" href="img/favicon.png" type="image/x-icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <script src="js/bootstrap.min.js"></script>
+        
+        <link href="css/style.css" rel="stylesheet">
+
+        <style>
+            textarea{
+            border: none;
+            display: block;
+            width: 100%;
+            height: 100px;
+            font-family: inherit;
+            padding: 10px;
+            margin: 0 0 20px;
+            font-style: 24px;
+            resize: none;
+            }
+
+            textarea.choice:focus{
+            outline: none;
+            }
+
+            .tag{
+            background-color: #ca0707;
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 10px 20px;
+            margin: 0 5px 10px 0;
+            font-style: 14px;
+            display: inline-block;
+            }
+
+            .tag.highlight{
+            background-color: rgb(9, 11, 139);
+            }
+
+        </style>
+
+    </head>
+  <body>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa fa-close"></i></a>
+        <a href="index.html"><i style="font-size: 30px; margin-top: 100px;" class="fa fa-home"></i></a>
+        <a href="#"><i style="font-size: 30px;" class="fa fa-star"></i></a>
+        <a href="choice.html"><i style="font-size: 30px;" class="fa fa-question"></i></a>
+        <a href="contact.html"><i style="font-size: 30px;" class="fa fa-address-book"></i></a>
+    </div>
+    <div id="main">
+        <button class="openbtn " onclick="openNav()" ><i class="fa fa-bars"></i></button>  
+        <div style="text-align:center;">
+            <img src="img/HNBı-removebg-preview (1).png" width="400px"  alt="Havvanur Bozömeroğlu">
+      
+            <div class="container">
+                <h4>Seçeneklerin arasına virgül(',') koyarak yazınız. <br> Tamamladığınızda 'Enter'a basınız.</h4>
+                <textarea placeholder="Seçenekeleri giriniz..." id="textarea"></textarea>
+                <div id="tags"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer" style="margin-top: 50px; position:relative; bottom:5px;">
+        <footer>
+            
+            <p class="copyright">2021 All right reserved. Designed hnb.</p>
+        </footer>
+    </div>
+
+    <script>
+         function openNav() {
+        document.getElementById("mySidebar").style.width = "150px";
+        document.getElementById("main").style.marginLeft = "0";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+      }
+        
+        
+      
+        const tagsEl = document.getElementById("tags");
+        const textarea = document.getElementById("textarea");
+
+        textarea.focus();
+
+        textarea.addEventListener("keyup", (e) => {
+        createTags(e.target.value);
+
+        if (e.key === "Enter") {
+            setTimeout(() => {
+            e.target.value = "";
+            }, 10);
+
+            randomSelect();
+        }
+        });
+
+        function createTags(input) {
+        const tags = input
+            .split(",")
+            .filter((tag) => tag.trim() !== "")
+            .map((tag) => tag.trim());
+
+        tagsEl.innerHTML = "";
+
+        tags.forEach((tag) => {
+            const tagEl = document.createElement("span");
+            tagEl.classList.add("tag");
+            tagEl.innerText = tag;
+            tagsEl.appendChild(tagEl);
+        });
+        }
+
+        function randomSelect() {
+        const times = 30;
+
+        const interval = setInterval(() => {
+            const randomTag = pickRandomTag();
+
+            if (randomTag !== undefined) {
+            highlightTag(randomTag);
+
+            setTimeout(() => {
+                unHighlightTag(randomTag);
+            }, 100);
+            }
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(interval);
+
+            setTimeout(() => {
+            const randomTag = pickRandomTag();
+
+            highlightTag(randomTag);
+            }, 100);
+        }, times * 100);
+        }
+
+        function pickRandomTag() {
+        const tags = document.querySelectorAll(".tag");
+        return tags[Math.floor(Math.random() * tags.length)];
+        }
+
+        function highlightTag(tag) {
+        tag.classList.add("highlight");
+        }
+
+        function unHighlightTag(tag) {
+        tag.classList.remove("highlight");
+        }
+
+    </script>
+  </body>
+</html>
